@@ -1,4 +1,4 @@
-function area(str1 ) {
+function speeding(str1 ) {
     if(typeof(str1)==='number'){
    console.log((Math.PI*str1**2).toFixed(2));
     }else{
