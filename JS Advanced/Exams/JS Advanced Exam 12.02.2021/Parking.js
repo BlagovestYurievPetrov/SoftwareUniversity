@@ -51,7 +51,7 @@ class Parking {
             throw new Error(`${carNumber} is not in the parking lot.`); 
         } else {
             let out = '';
-            out += `The Parking Lot has ${this.capacity - this.vehicles.length} empty spots left.\n`;
+            out = `The Parking Lot has ${this.capacity - this.vehicles.length} empty spots left.\n`;
             let payment = found.payed ? 'Has payed' : 'Not payed';
             out += `${found.carModel} == ${found.carNumber} - ${payment}`;
             return out.trim();
@@ -59,7 +59,7 @@ class Parking {
     } else {
         let sorted = this.vehicles.sort((a,b)=>a.carModel.localeCompare(b.carModel));
         let out = '';
-        out+=`The Parking Lot has ${this.capacity - this.vehicles.length} empty spots left.\n`
+        out=`The Parking Lot has ${this.capacity - this.vehicles.length} empty spots left.\n`
         sorted.map((x)=>{
             let payment = x.payed?'Has payed':'Not payed'; 
             out += `${x.carModel} == ${x.carNumber} - ${payment}\n`;
