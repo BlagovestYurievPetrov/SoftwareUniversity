@@ -1,17 +1,17 @@
 class ChristmasDinner {
     constructor(budget){
         //validate budget might need to be moved
-        if(budget<0){
-            throw new Error('The budget cannot be a negative number');
-        }
         this.budget = budget;
         this.dishes = [];
         this.products = [];
         this.guests = {};
+        if(budget<=0){
+            throw new Error('The budget cannot be a negative number');
+        }
     }
     shopping(product){
         let [name,value] = product;
-        if (this.budget<product[1]){
+        if (this.budget<value){
             throw new Error('Not enough money to buy this product');
         }
         this.products.push(name);
