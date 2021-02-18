@@ -38,6 +38,7 @@ function solve() {
        a.appendChild(currDiv);
        open.appendChild(a);
        grBtn.addEventListener('click', e=>{
+        
         let inProgress = document.getElementById('in-progress');
         let article = e.currentTarget.parentNode.parentNode;
         let nextDiv = document.createElement('div');
@@ -47,17 +48,20 @@ function solve() {
         let orgButton = document.createElement('button');
         orgButton.setAttribute('class', 'orange');
         orgButton.textContent = 'Finish';
+        
         nextDiv.appendChild(secondRedBtn);
         nextDiv.appendChild(orgButton);
         //e.currentTarget.parentNode = nextDiv;
         article.appendChild(nextDiv);
         inProgress.appendChild(article);
+    
         //e.currentTarget.parentNode = nextDiv;
            
         //      e.currentTarget.parentNode.appendChild(secondRedBtn);
         //   nextDiv.appendChild(orgButton);
         //    e.currentTarget.parentNode.remove();
         //    e.currentTarget.parentNode.parentNode.appendChild(nextDiv);
+        
             secondRedBtn.addEventListener('click',e=>{
                 e.currentTarget.parentNode.parentNode.remove();
             });
