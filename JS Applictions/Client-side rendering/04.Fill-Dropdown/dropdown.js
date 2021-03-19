@@ -13,7 +13,8 @@ let itemText = document.getElementById('itemText');
 let form = document.querySelector('form');
 form.addEventListener('submit',addItem);
 
-async function addItem() {
+async function addItem(e) {
+    e.preventDefault();
     let town = {
         text: itemText.value
     }
