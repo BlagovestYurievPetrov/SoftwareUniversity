@@ -57,8 +57,8 @@ export async function editPage(ctx) {
         const data = [...formData.entries()].reduce((a, [k, v])=>Object.assign(a, {[k]:v}), {});
         if (Object.entries(data).filter(([k, v])=> k != 'material').some(([k,v])=>v==='')){
             return alert('Missing fields!');
-
         }
+        console.log(data);
         data.year = Number(data.year);
         data.price = Number(data.price);
 
