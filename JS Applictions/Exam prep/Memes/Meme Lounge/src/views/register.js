@@ -43,8 +43,11 @@ export async function registerPage(ctx){
         if(!username||!email||!password||!repeatPass||!gender){
             return alert('All fields must be filled!');
         }
-        
-        await register(email, password);
+
+        if(password!=repeatPass){
+            return alert('Passwords do not match!');
+        }
+        await register(username, email, password, gender);
         ctx.setUserNav();
         ctx.page.redirect('/catalog');
     }
