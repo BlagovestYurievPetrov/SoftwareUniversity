@@ -1,5 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import {register} from '../api/data.js';
+import { register } from '../api/data.js';
+import { notify } from '../notification.js';
 
 const registerTemplate = (onSubmit) => html`
 <section id="register">
@@ -28,10 +29,10 @@ const registerTemplate = (onSubmit) => html`
     </form>
 </section>
 `
-export async function registerPage(ctx){
+export async function registerPage(ctx) {
     ctx.render(registerTemplate(onSubmit));
 
-    async function onSubmit(event){
+    async function onSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
         const username = formData.get('username');
@@ -40,15 +41,19 @@ export async function registerPage(ctx){
         const repeatPass = formData.get('repeatPass');
         const gender = formData.get('gender');
 
-        if(!username||!email||!password||!repeatPass||!gender){
-            return alert('All fields must be filled!');
-        }
+        try {
+            if (!username || !email || !password || !repeatPass || !gender) {
+                throw new Error('All fields must be filled!');
+            }
 
-        if(password!=repeatPass){
-            return alert('Passwords do not match!');
+            if (password != repeatPass) {
+                throw new Error('Passwords do not match!');
+            }
+            await register(username, email, password, gender);
+            ctx.setUserNav();
+            ctx.page.redirect('/catalog');
+        } catch (err) {
+            notify(err.message);
         }
-        await register(username, email, password, gender);
-        ctx.setUserNav();
-        ctx.page.redirect('/catalog');
     }
 }

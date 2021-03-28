@@ -1,5 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { getItemById, editRecords } from '../api/data.js';
+import { notify } from '../notification.js';
 
 
 const editTemplate = (item, onSubmit) => html`
@@ -10,7 +11,8 @@ const editTemplate = (item, onSubmit) => html`
             <label for="title">Title</label>
             <input id="title" type="text" placeholder="Enter Title" name="title" .value=${item.title}>
             <label for="description">Description</label>
-            <textarea id="description" placeholder="Enter Description" name="description" .innerText=${item.description}>
+            <textarea id="description" placeholder="Enter Description" name="description"
+                .innerText=${item.description}>
                         </textarea>
             <label for="imageUrl">Image Url</label>
             <input id="imageUrl" type="text" placeholder="Enter Meme ImageUrl" name="imageUrl" .value=${item.imageUrl}>
@@ -32,12 +34,15 @@ export async function editPage(ctx) {
         const description = formData.get('description');
         const imageUrl = formData.get('imageUrl');
 
-        if (!title || !description || !imageUrl){
-            return alert('All fields are required');
-        }
-        
-        await editRecords(item._id, {title, description, imageUrl});
-        ctx.page.redirect(`/details/${item._id}`);
+        try {
+            if (!title || !description || !imageUrl) {
+                throw new Error('All fields are required!');
+            }
 
+            await editRecords(item._id, { title, description, imageUrl });
+            ctx.page.redirect(`/details/${item._id}`);
+        } catch (err) {
+            notify(err.message);
+        }
     }
 }
