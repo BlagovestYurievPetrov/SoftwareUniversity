@@ -50,19 +50,19 @@ export async function createPage(ctx) {
             return alert('All fields are required!');
         }
 
-        if (title.length < 6 ) {
+        if (title.length <= 6 ) {
             return alert('Title must be atleast 6 characters long!');
         }
 
-        if (description.length < 10) {
+        if (description.length <= 10) {
             return alert('Description must be atleast 10 characters long!');
         }
 
-        if ( img.length<5 ) {
+        if ( img.length<=5 ) {
             return alert('Image must be atleast 5 characters long!');
         }
 
-        await createIdea({ title, description, img });
+        await createIdea({title, description, img} );
         ctx.page.redirect(`/catalog`);
     }
 }

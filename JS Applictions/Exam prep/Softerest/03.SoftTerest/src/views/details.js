@@ -3,9 +3,9 @@ import { getItemById, deleteRecord } from '../api/data.js';
 
 const detailsTemplate = (item, isOwner, onDelete) => html`
 <div class="container home some">
-    <img class="det-img" src=${item.imageUrl}/>
+    <img class="det-img" src=${item.img}>
     <div class="desc">
-        <h2 class="display-5">${item.title}e</h2>
+        <h2 class="display-5">${item.title}</h2>
         <p class="infoType">Description:</p>
         <p class="idea-description">${item.description}</p>
     </div>

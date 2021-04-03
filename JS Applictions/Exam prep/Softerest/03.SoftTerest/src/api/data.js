@@ -20,5 +20,5 @@ export async function deleteRecord(id){
 }
 
 export async function createIdea(data) {
-    return await api.post(host + '/data/ideas/', data);
+    return await api.post(host + '/data/ideas', data);
 }
