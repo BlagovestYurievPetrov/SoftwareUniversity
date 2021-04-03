@@ -1,43 +1,49 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
-import { getItemById, deleteRecord } from '../api/data.js';
+import {html} from '../../node_modules/lit-html/lit-html.js';
+import {getDetails, deleteItem, setLike, getLikes, getOwnLikes} from '../api/data.js';
 
-const detailsTemplate = (item, isOwner, onDelete,userId) => html`
+const detailsTemplate = (movie, isOwner, onDelete, onLike, ownLikes, likes, myId) => html`
 <section id="movie-example">
-    <div class="container">
-        <div class="row bg-light text-dark">
-            <h1>Movie title: ${item.title}</h1>
-
-            <div class="col-md-8">
-                <img class="img-thumbnail" src=${item.img} alt="Movie">
-            </div>
-            <div class="col-md-4 text-center">
-                <h3 class="my-3 ">Movie Description</h3>
-                <p>${item.description}</p>
-                ${userId ? isOwner ? html`
-                <a @click=${onDelete} class="btn btn-danger">Delete</a>
-                <a class="btn btn-warning" href=${`/edit/${item._id}`}>Edit </a>` : html` <a class="btn btn-primary"
-                    href="#"}>Like</a>
-                <span class="enrolled-span">Liked 1</span>` : html``}
-
-
-            </div>
+<div class="container">
+    <div class="row bg-light text-dark">
+        <h1>Movie title: ${movie.title}</h1>
+        <div class="col-md-8">
+            <img class="img-thumbnail" src="${movie.img}" alt="Movie">
+        </div>
+        <div class="col-md-4 text-center">
+            <h3 class="my-3 ">${movie.description}</p>
+            ${myId?html` ${isOwner ? html`
+            <a @click=${onDelete} class="btn btn-danger" href="#">Delete</a>
+            <a class="btn btn-warning" href="/edit/${movie._id}">Edit</a>` : 
+             ownLikes.length===1 ? '' : html`
+            <a @click=${onLike} class="btn btn-primary" href="#">Like</a>`}
+            <span class="enrolled-span">${likes} like${likes>1 ? 's' : ''}</span>` : html``}            
+           
         </div>
     </div>
-</section>
-`
+</div>
+</section>`;
 
 export async function detailsPage(ctx) {
-    const id = ctx.params.id;
-    const item = await getItemById(id);
-    const userId = sessionStorage.getItem('userId');
-
-    ctx.render(detailsTemplate(item, item._ownerId === userId, onDelete,userId));
+    const movieId = ctx.params.id;
+    const movie = await getDetails(movieId);
+    const myId = sessionStorage.getItem('userId');
+    const likes = await getLikes(movie._id);
+    const ownLikes = await getOwnLikes(movie._id);
+    
+    ctx.render(detailsTemplate(movie, myId===movie._ownerId, onDelete, onLike, ownLikes, likes, myId));
 
     async function onDelete() {
-        const confirmed = confirm('Are you sure you want to delete this item?');
+        const confirmed = confirm('Are you sure?');
         if (confirmed) {
-            deleteRecord(item._id);
+            await deleteItem(movie._id);            
             ctx.page.redirect('/');
         }
     }
+
+    async function onLike() {
+        
+        await setLike({movieId: movie._id});        
+        ctx.page.redirect('/details/' + movie._id)
+
+    }    
 }
