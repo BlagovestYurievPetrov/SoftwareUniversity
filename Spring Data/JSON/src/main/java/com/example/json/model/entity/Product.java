@@ -7,12 +7,11 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
-public class Product {
-    private Long id;
+public class Product extends BaseEntity{
     private String name;
     private BigDecimal price;
-    private Long buyerId;
-    private Long sellerId;
+    private User seller;
+    private User buyer;
     private Set<Category> categories;
 
     @ManyToMany
@@ -26,17 +25,7 @@ public class Product {
 
     public Product() {
     }
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     @Column
-    @Min(3)
     public String getName() {
         return name;
     }
@@ -52,20 +41,20 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    @Column
-    public Long getBuyerId() {
-        return buyerId;
+    @ManyToOne
+    public User getSeller() {
+        return seller;
     }
 
-    public void setBuyerId(Long buyerId) {
-        this.buyerId = buyerId;
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
-    @Column
-    public Long getSellerId() {
-        return sellerId;
+    @ManyToOne
+    public User getBuyer() {
+        return buyer;
     }
 
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
     }
 }
