@@ -2,9 +2,7 @@ package softuni.exam.models.entity;
 
 import softuni.exam.models.entity.enums.Rating;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 
@@ -36,6 +34,7 @@ public class Seller extends BaseEntity{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     @Column(unique = true)
     //@Pattern(regexp = "")
     public String getEmail() {
@@ -45,7 +44,7 @@ public class Seller extends BaseEntity{
     public void setEmail(String email) {
         this.email = email;
     }
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     public Rating getRating() {
         return rating;
     }
