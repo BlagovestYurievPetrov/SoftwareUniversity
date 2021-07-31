@@ -2,6 +2,8 @@ package softuni.exam.service;
 
 
 
+import softuni.exam.models.entity.Car;
+
 import java.io.IOException;
 
 
@@ -14,4 +16,6 @@ public interface CarService {
 	String importCars() throws IOException;
 
     String getCarsOrderByPicturesCountThenByMake();
+
+    Car findById(Integer car);
 }

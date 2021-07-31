@@ -1,24 +1,26 @@
-package softuni.exam.models.entity;
+package softuni.exam.models.dto;
 
 import softuni.exam.models.entity.enums.Rating;
 
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
-
-@Entity
-@Table(name = "sellers")
-public class Seller extends BaseEntity{
+@XmlAccessorType(XmlAccessType.FIELD)
+public class SellerSeedDto {
+    @XmlElement(name = "first-name")
     private String firstName;
+    @XmlElement(name = "last-name")
     private String lastName;
+    @XmlElement(name = "email")
     private String email;
+    @XmlElement(name = "rating")
     private Rating rating;
+    @XmlElement(name = "town")
     private String town;
 
-    public Seller() {
-    }
-
-    @Column
+    @Size(min = 2, max = 20)
     public String getFirstName() {
         return firstName;
     }
@@ -26,7 +28,7 @@ public class Seller extends BaseEntity{
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    @Column
+    @Size(min = 2, max = 20)
     public String getLastName() {
         return lastName;
     }
@@ -34,8 +36,7 @@ public class Seller extends BaseEntity{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    @Column(unique = true)
+    @Email
     public String getEmail() {
         return email;
     }
@@ -43,7 +44,7 @@ public class Seller extends BaseEntity{
     public void setEmail(String email) {
         this.email = email;
     }
-    @Enumerated(EnumType.STRING)
+    @NotNull
     public Rating getRating() {
         return rating;
     }
@@ -51,7 +52,7 @@ public class Seller extends BaseEntity{
     public void setRating(Rating rating) {
         this.rating = rating;
     }
-    @Column(nullable = false)
+    @NotBlank
     public String getTown() {
         return town;
     }

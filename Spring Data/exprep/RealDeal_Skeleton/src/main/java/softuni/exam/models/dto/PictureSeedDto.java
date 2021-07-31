@@ -2,6 +2,8 @@ package softuni.exam.models.dto;
 
 import com.google.gson.annotations.Expose;
 
+import javax.validation.constraints.Size;
+
 public class PictureSeedDto {
     @Expose
     private String name;
@@ -9,7 +11,7 @@ public class PictureSeedDto {
     private String dateAndTime;
     @Expose
     private Integer car;
-
+    @Size(min = 2, max = 20)
     public String getName() {
         return name;
     }
